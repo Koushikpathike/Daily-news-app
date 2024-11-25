@@ -8,7 +8,12 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Text
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.font.FontFamily
+import androidx.compose.ui.text.style.LineHeightStyle
+import androidx.compose.ui.unit.sp
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.lifecycle.ViewModelProvider
 import com.example.dailynews.ui.theme.DailyNewsTheme
@@ -27,7 +32,7 @@ class MainActivity : ComponentActivity() {
                             .fillMaxSize()
                     ) {
 //                        Text(text = "Daily News App",
-//                            modifier = Modifier.align(Alignment.CenterHorizontally),
+//                            modifier = Modifier.run { align(LineHeightStyle.Alignment.CenterHorizontally) },
 //                            color = Color.Gray,
 //                            fontSize = 25.sp,
 //                            fontFamily = FontFamily.SansSerif
