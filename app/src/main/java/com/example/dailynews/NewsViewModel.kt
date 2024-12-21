@@ -1,6 +1,5 @@
 package com.example.dailynews
 
-import android.app.DownloadManager.Query
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -61,9 +60,6 @@ class NewsViewModel : ViewModel() {
                     throwable.localizedMessage?.let { Log.i("News Api Response Failed", it) }
                 }
             }
-
         })
     }
-
-
 }
