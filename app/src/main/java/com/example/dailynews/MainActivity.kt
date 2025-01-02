@@ -1,5 +1,6 @@
 package com.example.dailynews
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -15,32 +16,47 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.toRoute
+import com.example.dailynews.screens.LoginActivity
 import com.example.dailynews.ui.theme.DailyNewsTheme
+import com.google.firebase.auth.FirebaseAuth
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        FirebaseAuth.getInstance()
+
         enableEdgeToEdge()
-        val newsViewModel = ViewModelProvider(this)[NewsViewModel :: class.java]
+        val newsViewModel = ViewModelProvider(this)[NewsViewModel::class.java]
         installSplashScreen()
-        setContent {
 
-            val navController = rememberNavController()
+        val user = FirebaseAuth.getInstance().currentUser
+        if (user == null) {
+            startActivity(Intent(this, LoginActivity::class.java))
+            finish()
+        } else {
+            setContent {
 
-            DailyNewsTheme {
-                Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    Column(
-                        modifier = Modifier.padding(innerPadding)
-                            .fillMaxSize()
-                    ) {
-                        NavHost(navController = navController, startDestination = HomePageScreen) {
-                            composable<HomePageScreen> {
-                                HomePage(newsViewModel, navController)
-                            }
+                val navController = rememberNavController()
 
-                            composable<NewsArticleScreen> {
-                                val args = it.toRoute<NewsArticleScreen>()
-                                NewsArticlePage(args.url)
+                DailyNewsTheme {
+                    Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
+                        Column(
+                            modifier = Modifier.padding(innerPadding)
+                                .fillMaxSize()
+                        ) {
+                            NavHost(
+                                navController = navController,
+                                startDestination = HomePageScreen
+                            ) {
+                                composable<HomePageScreen> {
+                                    HomePage(newsViewModel, navController)
+                                }
+
+                                composable<NewsArticleScreen> {
+                                    val args = it.toRoute<NewsArticleScreen>()
+                                    NewsArticlePage(args.url)
+                                }
                             }
                         }
                     }

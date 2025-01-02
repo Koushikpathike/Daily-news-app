@@ -19,8 +19,6 @@ class NewsViewModel : ViewModel() {
         fetchTopNewsHeadLines()
     }
 
-
-
      fun fetchTopNewsHeadLines(category: String = "GENERAL"){
         val newsApiClient = NewsApiClient(Constant.apikey)
 
